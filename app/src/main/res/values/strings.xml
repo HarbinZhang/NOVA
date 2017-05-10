@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NOVA</string>
+    <string name="set_reminder">Set Reminder</string>
 </resources>
