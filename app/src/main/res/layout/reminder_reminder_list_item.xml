@@ -12,7 +12,7 @@
         android:layout_gravity="center"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp"
         android:text="--"/>
 
@@ -23,7 +23,7 @@
         android:layout_gravity="center"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp"
         android:text="0"/>
 
@@ -47,15 +47,15 @@
         android:textSize="16sp"
         android:text="--"/>
 
-    <TextView
-        android:id="@+id/reminder_Progress_text_view"
+    <ProgressBar
+        android:id="@+id/reminder_progress_progress_bar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_weight="1"
-        android:fontFamily="sans-serif"
-        android:textSize="16sp"
-        android:text="--"/>
+        android:layout_weight="2"
+        android:progress="0"
+        />
+
 
     <TextView
         android:id="@+id/reminder_info_text_view"
@@ -67,16 +67,14 @@
         android:textSize="16sp"
         android:text="--"/>
 
-    <TextView
-        android:id="@+id/reminder_remind_text_view"
+
+    <Switch
+        android:id="@+id/reminder_remind_switch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
         android:layout_weight="1"
-        android:fontFamily="sans-serif"
-        android:textSize="16sp"
-        android:text="True"/>
-
+        android:checked="true"
+        />
 
 
 </LinearLayout>
