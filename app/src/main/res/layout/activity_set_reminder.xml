@@ -58,6 +58,7 @@
             android:id="@+id/reminder_days_check_box"
             android:layout_weight="1"
             android:text="Days"
+            android:onClick="select_days"
 
             />
 
@@ -98,5 +99,13 @@
 
 
     </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/reminder_debug_window"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="For debug"
+        />
 
 </LinearLayout>

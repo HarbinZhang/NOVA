@@ -49,7 +49,9 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
         int progress = mCursor.getInt(mCursor.getColumnIndex(ReminderContract.ReminderlistEntry.COLUMN_PROGRESS));
         String info = mCursor.getString(mCursor.getColumnIndex(ReminderContract.ReminderlistEntry.COLUMN_INFO));
         long id = mCursor.getLong(mCursor.getColumnIndex(ReminderContract.ReminderlistEntry._ID));
+        String mDays = mCursor.getString(mCursor.getColumnIndex(ReminderContract.ReminderlistEntry.COLUMN_DAYS));
 
+        holder.mDaysTextView.setText(mDays);
         holder.itemView.setTag(id);
         holder.medicineTextView.setText(medicine);
         holder.dosageTextView.setText(String.valueOf(dosage));
@@ -84,6 +86,7 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
         TextView NOofDosageTextView;
         TextView infoTextView;
         ProgressBar pb;
+        TextView mDaysTextView;
 
         public ReminderViewHolder(View itemView){
             super(itemView);
@@ -92,6 +95,7 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
             NOofDosageTextView = (TextView) itemView.findViewById(R.id.reminder_NO_text_view);
             infoTextView = (TextView) itemView.findViewById(R.id.reminder_info_text_view);
             pb = (ProgressBar) itemView.findViewById(R.id.reminder_progress_progress_bar);
+            mDaysTextView = (TextView) itemView.findViewById(R.id.reminder_Days_text_view);
         }
 
     }
