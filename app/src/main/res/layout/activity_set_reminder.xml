@@ -58,7 +58,7 @@
             android:id="@+id/reminder_days_check_box"
             android:layout_weight="1"
             android:text="Days"
-            android:onClick="select_days"
+            android:onClick="set_time"
 
             />
 

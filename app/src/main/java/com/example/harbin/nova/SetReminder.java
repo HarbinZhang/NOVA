@@ -3,6 +3,7 @@ package com.example.harbin.nova;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -214,46 +215,52 @@ public class SetReminder extends AppCompatActivity {
                 ReminderContract.ReminderlistEntry._ID + "="+id,null) > 0;
     }
 
-    public void select_days(View view) {
-        Dialog dialog;
+    public void set_time(View view) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle("Select days you want reminder:");
-
-        builder.setMultiChoiceItems(DAYS, null, new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                if(isChecked){
-                    itemSelected.add(Integer.toString(which));
-                }else if(itemSelected.contains(Integer.toString(which))){
-//                    itemSelected.remove(Integer.valueOf(which));
-                    itemSelected.remove(Integer.toString(which));
-                }
-            }
-        }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                debug_window.setText("");
-                mDays_string = "";
-                for(String it:itemSelected){
-                    mDays_string += it;
-                }
-                debug_window.setText(mDays_string);
-                itemSelected.clear();
-            }
-        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                itemSelected.clear();
-            }
-        });
-
-        dialog = builder.create();
-
-        dialog.show();
+        Intent startSetTime = new Intent(this, SetTime.class);
+        startActivity(startSetTime);
 
 
+
+
+
+//        Dialog dialog;
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//
+//        builder.setTitle("Select days you want reminder:");
+//
+//        builder.setMultiChoiceItems(DAYS, null, new DialogInterface.OnMultiChoiceClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+//                if(isChecked){
+//                    itemSelected.add(Integer.toString(which));
+//                }else if(itemSelected.contains(Integer.toString(which))){
+////                    itemSelected.remove(Integer.valueOf(which));
+//                    itemSelected.remove(Integer.toString(which));
+//                }
+//            }
+//        }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                debug_window.setText("");
+//                mDays_string = "";
+//                for(String it:itemSelected){
+//                    mDays_string += it;
+//                }
+//                debug_window.setText(mDays_string);
+//                itemSelected.clear();
+//            }
+//        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                itemSelected.clear();
+//            }
+//        });
+//
+//        dialog = builder.create();
+//
+//        dialog.show();
 
     }
 }

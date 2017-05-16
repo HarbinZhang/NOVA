@@ -17,7 +17,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".SetReminder" />
-        <activity android:name=".ReminderListAdapter"></activity>
+        <activity android:name=".ReminderListAdapter" />
+        <activity android:name=".SetTime" />
+        <activity android:name=".Alarm.AlarmManagerUtil" />
+        <activity android:name=".Alarm.SelectRemindCyclePopup"></activity>
     </application>
 
 </manifest>
