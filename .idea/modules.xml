@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/NOVA.iml" filepath="$PROJECT_DIR$/NOVA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/alarmApp/alarmApp.iml" filepath="$PROJECT_DIR$/alarmApp/alarmApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/alarmmanagerclock/alarmmanagerclock.iml" filepath="$PROJECT_DIR$/alarmmanagerclock/alarmmanagerclock.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
