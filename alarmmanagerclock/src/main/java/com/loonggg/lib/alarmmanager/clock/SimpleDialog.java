@@ -38,7 +38,7 @@ public class SimpleDialog extends Dialog {
 
         ll_button = (LinearLayout) customView.findViewById(R.id.ll_button);
         dialog_title = (TextView) customView.findViewById(R.id.dialog_title);
-        setTitle("提示信息");
+        setTitle("Remind Info");
         dialog_message = (EditText) customView.findViewById(R.id.dialog_message);
         dialog_message.clearFocus();
         bt_confirm = (Button) customView.findViewById(R.id.dialog_confirm);

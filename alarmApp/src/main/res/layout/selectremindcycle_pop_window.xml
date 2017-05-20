@@ -22,7 +22,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
-            android:text="只响一次"
+            android:text="Just Once"
             android:textColor="@color/black_33"
             android:textSize="20sp"/>
 
@@ -35,7 +35,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
-            android:text="每天"
+            android:text="Everyday"
             android:textColor="@color/black_33"
             android:textSize="20sp"/>
 
@@ -48,7 +48,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
-            android:text="@string/mon"
+            android:text="Monday"
             android:textColor="@color/black_33"
             android:textSize="20sp"/>
 
@@ -61,7 +61,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
-            android:text="@string/tue"
+            android:text="Tuesday"
             android:textColor="@color/black_33"
             android:textSize="20sp"/>
 
@@ -74,7 +74,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
-            android:text="@string/wed"
+            android:text="Wednesday"
             android:textColor="@color/black_33"
             android:textSize="20sp"/>
 
@@ -87,7 +87,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
-            android:text="@string/thu"
+            android:text="Thursday"
             android:textColor="@color/black_33"
             android:textSize="20sp"/>
 
@@ -100,7 +100,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
-            android:text="@string/fri"
+            android:text="Friday"
             android:textColor="@color/black_33"
             android:textSize="20sp"/>
 
@@ -113,7 +113,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
-            android:text="@string/sat"
+            android:text="Saturday"
             android:textColor="@color/black_33"
             android:textSize="20sp"/>
 
@@ -126,7 +126,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
-            android:text="@string/sun"
+            android:text="Sunday"
             android:textColor="@color/black_33"
             android:textSize="20sp"/>
 
@@ -140,7 +140,7 @@
             android:layout_marginTop="10dp"
             android:drawableRight="@null"
             android:gravity="center"
-            android:text="@string/cycle_sure"
+            android:text="OK"
             android:textColor="@color/black_33"
             android:textSize="20sp"/>
 
