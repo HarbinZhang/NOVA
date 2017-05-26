@@ -23,4 +23,12 @@
         android:text="@string/set_reminder"
         android:onClick="set_reminder_click"
         />
+
+    <Button
+        android:id="@+id/button_sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sign_in"
+        android:onClick="sign_in_click"
+        />
 </LinearLayout>

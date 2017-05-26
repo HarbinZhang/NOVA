@@ -62,7 +62,7 @@ public class AlarmManagerUtil {
         intent.putExtra("msg", tips);
         intent.putExtra("id", id);
         intent.putExtra("soundOrVibrator", soundOrVibrator);
-        PendingIntent sender = PendingIntent.getBroadcast(context, id, intent, PendingIntent
+        PendingIntent sender = PendingIntent.getBroadcast(context, id , intent, PendingIntent
                 .FLAG_CANCEL_CURRENT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             am.setWindow(AlarmManager.RTC_WAKEUP, calMethod(week, calendar.getTimeInMillis()),

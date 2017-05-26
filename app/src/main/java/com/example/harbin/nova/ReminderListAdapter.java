@@ -1,7 +1,9 @@
 package com.example.harbin.nova;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loonggg.alarmmanager.clock.data.ReminderContract;
+import com.loonggg.alarmmanager.clock.data.ReminderDbHelper;
 import com.loonggg.lib.alarmmanager.clock.AlarmManagerUtil;
 
 public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapter.ReminderViewHolder> {
@@ -23,10 +26,15 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
     private Cursor mCursor;
 
 
+    private SQLiteDatabase mDb;
 
     public ReminderListAdapter(Context context, Cursor cursor){
         this.mContext = context;
         this.mCursor = cursor;
+
+        ReminderDbHelper dbHelper = new ReminderDbHelper(context);
+        mDb = dbHelper.getWritableDatabase();
+
     }
 
 
@@ -61,7 +69,7 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
         holder.NOofDosageTextView.setText(String.valueOf(NOofDosage));
         holder.infoTextView.setText(info);
         holder.timeTextView.setText(time);
-//        holder.remind_switch.setChecked(remind);
+        holder.remind_switch.setChecked(remind);
         holder.remind_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
 
             @Override
@@ -79,7 +87,7 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
                                     mCursor.getColumnIndex(ReminderContract.ReminderlistEntry.COLUMN_TIME_REMIND));
                             String[] times = time.split(":");
                             AlarmManagerUtil.setAlarm(mContext, 2, Integer.parseInt(times[0]), Integer
-                                    .parseInt(times[1]), id, i, "Reminder Alarm", 1);
+                                    .parseInt(times[1]), id, i, medicine, 1);
 
                         }
                     }
@@ -87,13 +95,21 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
                     Toast.makeText(mContext, "Reminder Added", Toast.LENGTH_SHORT).show();
 
                     // change sql data
+                    ContentValues cv = new ContentValues();
+                    cv.put(ReminderContract.ReminderlistEntry.COLUMN_REMIND, 1);
+                    mDb.update(ReminderContract.ReminderlistEntry.TABLE_NAME, cv,
+                            "_id=" + idL, null);
 
                 }else{
-                    // set alarm
+                    // cancel alarm
                     AlarmManagerUtil.cancelAlarm(mContext, AlarmManagerUtil.ALARM_ACTION, id);
                     Toast.makeText(mContext, "Reminder Canceled", Toast.LENGTH_SHORT).show();
 
                     // change sql data
+                    ContentValues cv = new ContentValues();
+                    cv.put(ReminderContract.ReminderlistEntry.COLUMN_REMIND, 0);
+                    mDb.update(ReminderContract.ReminderlistEntry.TABLE_NAME, cv,
+                            "_id="+idL, null);
 
                 }
             }

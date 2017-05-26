@@ -69,6 +69,7 @@ public class AlarmMainActivity extends AppCompatActivity implements View.OnClick
         ring_rl.setOnClickListener(this);
         tv_repeat_value = (TextView) findViewById(R.id.tv_repeat_value);
         tv_ring_value = (TextView) findViewById(R.id.tv_ring_value);
+
         pvTime = new TimePickerView(this, TimePickerView.Type.HOURS_MINS);
 //        pvTime = new TimePickerView(this, new TimePickerView.OnTimeSelectListener(){
 //
@@ -170,7 +171,7 @@ public class AlarmMainActivity extends AppCompatActivity implements View.OnClick
         cv.put(ReminderContract.ReminderlistEntry.COLUMN_INFO, info);
         cv.put(ReminderContract.ReminderlistEntry.COLUMN_PROGRESS, progress);
         cv.put(ReminderContract.ReminderlistEntry.COLUMN_TIME_REMIND, time);
-
+        cv.put(ReminderContract.ReminderlistEntry.COLUMN_REMIND, 1);
 
         mNewDosageEditText.clearFocus();
         mNewMedicineEditText.clearFocus();
@@ -236,7 +237,7 @@ public class AlarmMainActivity extends AppCompatActivity implements View.OnClick
                 String[] weeks = weeksStr.split(",");
                 for (int i = 0; i < weeks.length; i++) {
                     AlarmManagerUtil.setAlarm(this, 2, Integer.parseInt(times[0]), Integer
-                            .parseInt(times[1]), id, Integer.parseInt(weeks[i]), "Reminder Alarm", ring);
+                            .parseInt(times[1]), id, Integer.parseInt(weeks[i]), medicineName, ring);
                 }
             }
             Toast.makeText(this, "Reminder Added Successfully", Toast.LENGTH_LONG).show();

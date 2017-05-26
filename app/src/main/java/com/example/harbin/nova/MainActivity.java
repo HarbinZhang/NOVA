@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.harbin.nova.login.SignupActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView debug;
@@ -22,4 +24,11 @@ public class MainActivity extends AppCompatActivity {
         Intent start_set_reminder = new Intent(this, SetReminder.class);
         startActivity(start_set_reminder);
     }
+
+
+    public void sign_in_click(View view){
+        Intent sign_in_click = new Intent(this, SignupActivity.class);
+        startActivity(sign_in_click);
+    }
+
 }

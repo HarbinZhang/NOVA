@@ -1,5 +1,6 @@
 package com.example.harbin.nova;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,6 +14,7 @@ import android.view.View;
 import com.loonggg.alarmmanager.clock.AlarmMainActivity;
 import com.loonggg.alarmmanager.clock.data.ReminderContract;
 import com.loonggg.alarmmanager.clock.data.ReminderDbHelper;
+import com.loonggg.lib.alarmmanager.clock.AlarmManagerUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,6 +36,8 @@ public class SetReminder extends AppCompatActivity {
     private final ArrayList<String> itemSelected = new ArrayList();
 
     private String mDays_string;
+
+    private Context mContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +74,7 @@ public class SetReminder extends AppCompatActivity {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 long id = (long) viewHolder.itemView.getTag();
                 removeReminder(id);
+                AlarmManagerUtil.cancelAlarm(mContext, AlarmManagerUtil.ALARM_ACTION, safeLongToInt(id));
                 reminderAdapter.swapCursor(getAllReminders(
                         Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
                 ));
@@ -179,5 +184,14 @@ public class SetReminder extends AppCompatActivity {
 
 
 
+    }
+
+
+    public static int safeLongToInt(long l) {
+        if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException
+                    (l + " cannot be cast to int without changing its value.");
+        }
+        return (int) l;
     }
 }
