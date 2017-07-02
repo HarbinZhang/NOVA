@@ -27,10 +27,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:orientation="horizontal">
+                android:orientation="vertical">
+
+
 
                 <EditText
-                    android:id="@+id/reminder_medicine_edit_text"
+                    android:id="@+id/et_reminder_medicine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -39,104 +41,118 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
                 <EditText
-                    android:id="@+id/reminder_dosage_edit_text"
+                    android:id="@+id/et_reminder_strength"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:hint="dosage"
-                    android:inputType="number"
-                    android:maxLength="4"
+                    android:hint="medicine strength"
+                    android:inputType="text"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
-                <EditText
-                    android:id="@+id/reminder_NOofDosage_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:hint="NO.of Dosage"
-                    android:inputType="number"
-                    android:maxLength="4"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+
+
 
 
                 <EditText
-                    android:id="@+id/reminder_progress_edit_text"
+                    android:id="@+id/et_reminder_duration"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:hint="#weeks"
+                    android:hint="dosage duration weeks:"
                     android:inputType="number"
-                    android:maxLength="4"
+                    android:maxLength="1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
-                <EditText
-                    android:id="@+id/reminder_info_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:hint="addtional info"
-                    android:inputType="textVisiblePassword"
-                    android:maxLength="40"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+
+
 
 
             </LinearLayout>
 
 
 
+
+
+        <RelativeLayout
+            android:id="@+id/period_rl"
+            style="@style/item_style"
+            >
+
             <TextView
-                android:id="@+id/date_tv"
-                android:layout_width="match_parent"
+                android:id="@+id/period_tv"
+                style="@style/item_text_style"
+                android:layout_alignParentLeft="true"
+                android:text="Remind Period"/>
+
+            <TextView
+                android:id="@+id/arrow_three"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:text="Select Time"/>
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/personal_item_arrow"/>
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="50dp"
-                android:background="@color/line_and_outline_grey"/>
+                android:id="@+id/tv_period_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@id/arrow_three"
+                android:textColor="@color/black_33"
+                android:textSize="14sp"/>
+        </RelativeLayout>
 
 
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/line_and_outline_grey"/>
 
-            <RelativeLayout
-                android:id="@+id/repeat_rl"
-                style="@style/item_style"
-                >
 
-                <TextView
-                    android:id="@+id/tv_repeat"
-                    style="@style/item_text_style"
-                    android:layout_alignParentLeft="true"
-                    android:text="Alarm Cycle"/>
+        <RelativeLayout
+            android:id="@+id/rl_time"
+            style="@style/item_style"
+            >
 
-                <TextView
-                    android:id="@+id/arrow_one"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/personal_item_arrow"/>
+            <TextView
+                android:id="@+id/tv_time"
+                style="@style/item_text_style"
+                android:layout_alignParentLeft="true"
+                android:text="Remind Time"/>
 
-                <TextView
-                    android:id="@+id/tv_repeat_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:layout_toLeftOf="@id/arrow_one"
-                    android:textColor="@color/black_33"
-                    android:textSize="14sp"/>
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/arrow_four"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/personal_item_arrow"/>
+
+            <TextView
+                android:id="@+id/tv_time_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@id/arrow_four"
+                android:textColor="@color/black_33"
+                android:textSize="14sp"/>
+        </RelativeLayout>
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/line_and_outline_grey"/>
+
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -191,7 +207,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/alarm_debug_textview"
+                android:id="@+id/tv_alarm_debug"
                 android:text="for debug"
                 />
 

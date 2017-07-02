@@ -1,5 +1,6 @@
 package com.example.harbin.nova;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,11 +12,21 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.loonggg.alarmmanager.clock.AlarmMainActivity;
+import com.loonggg.alarmmanager.clock.data.Reminder;
 import com.loonggg.alarmmanager.clock.data.ReminderContract;
 import com.loonggg.alarmmanager.clock.data.ReminderDbHelper;
 import com.loonggg.lib.alarmmanager.clock.AlarmManagerUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -39,6 +50,14 @@ public class SetReminder extends AppCompatActivity {
 
     private Context mContext = this;
 
+
+    private FirebaseUser mFirebaseUser;
+    private DatabaseReference mDatabase;
+    private String mUserId;
+    private FirebaseAuth mFirebaseAuth;
+
+    String today_date;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,17 +69,166 @@ public class SetReminder extends AppCompatActivity {
 
         reminderRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+
+
+
+
+
+
+
+        try {
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            today_date =  dateFormat.format(cal.getTime());
+        }catch (Exception e){
+
+        }
+
         ReminderDbHelper dbHelper = new ReminderDbHelper(this);
-
         mDb = dbHelper.getWritableDatabase();
-
-        Cursor cursor = getAllReminders(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
-
+        Cursor cursor = getAllReminders(today_date);
         reminderAdapter = new ReminderListAdapter(this, cursor);
-
-
         reminderRecyclerView.setAdapter(reminderAdapter);
 
+
+
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        mUserId = mFirebaseUser.getUid();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        final Query remindersQuery = mDatabase.child("users").child(mUserId).child("reminders");
+        remindersQuery.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Reminder reminder = dataSnapshot.getValue(Reminder.class);
+
+                if(isExist(reminder)){
+                    return ;
+                }
+
+                try {
+                    String newDate = reminder.startTime;
+                    Calendar cal = Calendar.getInstance();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    cal.setTime(dateFormat.parse(newDate));
+
+                    int i = 0;
+                    while (i * reminder.period <= reminder.duration * 7){
+
+                        for(String time : reminder.time.split(",")){
+
+                            ContentValues cv = new ContentValues();
+                            cv.put(ReminderContract.ReminderlistEntry.COLUMN_MEDICINE, reminder.medicine);
+                            cv.put(ReminderContract.ReminderlistEntry.COLUMN_STRENGTH, reminder.strength);
+                            cv.put(ReminderContract.ReminderlistEntry.COLUMN_REMINDTIME, Integer.valueOf(time));
+                            cv.put(ReminderContract.ReminderlistEntry.COLUMN_REMINDDAY, newDate);
+                            mDb.insert(ReminderContract.ReminderlistEntry.TABLE_NAME, null, cv);
+
+                        }
+
+                        cal.add(Calendar.DATE, reminder.period);
+                        i++;
+                        newDate = dateFormat.format(cal.getTime());
+
+                    }
+
+                }catch (Exception e){
+
+                }
+
+                reminderAdapter.swapCursor(getAllReminders(
+                        today_date
+                ));
+
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                Reminder reminder = dataSnapshot.getValue(Reminder.class);
+
+
+                if(!isExist(reminder)){
+                    return ;
+                }
+
+
+                String medicine = reminder.medicine;
+
+                mDb.execSQL("delete from " + ReminderContract.ReminderlistEntry.TABLE_NAME +
+                        " where " + ReminderContract.ReminderlistEntry.COLUMN_MEDICINE + " = '" + medicine + "'");
+
+
+                if(isExist(reminder)){
+                    return ;
+                }
+
+                try {
+                    String newDate = reminder.startTime;
+                    Calendar cal = Calendar.getInstance();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    cal.setTime(dateFormat.parse(newDate));
+
+                    int i = 0;
+                    while (i * reminder.period <= reminder.duration * 7){
+
+                        for(String time : reminder.time.split(",")){
+
+                            ContentValues cv = new ContentValues();
+                            cv.put(ReminderContract.ReminderlistEntry.COLUMN_MEDICINE, reminder.medicine);
+                            cv.put(ReminderContract.ReminderlistEntry.COLUMN_STRENGTH, reminder.strength);
+                            cv.put(ReminderContract.ReminderlistEntry.COLUMN_REMINDTIME, Integer.valueOf(time));
+                            cv.put(ReminderContract.ReminderlistEntry.COLUMN_REMINDDAY, newDate);
+                            mDb.insert(ReminderContract.ReminderlistEntry.TABLE_NAME, null, cv);
+
+                        }
+
+                        cal.add(Calendar.DATE, reminder.period);
+                        i++;
+                        newDate = dateFormat.format(cal.getTime());
+
+                    }
+
+                }catch (Exception e){
+
+                }
+
+                reminderAdapter.swapCursor(getAllReminders(
+                        today_date
+                ));
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                Reminder reminder = dataSnapshot.getValue(Reminder.class);
+
+                String medicine = reminder.medicine;
+
+                mDb.execSQL("delete from " + ReminderContract.ReminderlistEntry.TABLE_NAME +
+                        " where " + ReminderContract.ReminderlistEntry.COLUMN_MEDICINE + " = '" + medicine + "'");
+
+
+                reminderAdapter.swapCursor(getAllReminders(
+                        today_date
+                ));
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT){
@@ -76,7 +244,7 @@ public class SetReminder extends AppCompatActivity {
                 removeReminder(id);
                 AlarmManagerUtil.cancelAlarm(mContext, AlarmManagerUtil.ALARM_ACTION, safeLongToInt(id));
                 reminderAdapter.swapCursor(getAllReminders(
-                        Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+                        today_date
                 ));
             }
         }).attachToRecyclerView(reminderRecyclerView);
@@ -90,43 +258,54 @@ public class SetReminder extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+
+
         reminderAdapter.swapCursor(getAllReminders(
-                Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+                today_date
         ));
     }
 
-    // read from db
-    private Cursor getAllReminders(int weekday){
+    private boolean isExist(Reminder reminder){
 
-        String day;
-
-        if(weekday == Calendar.MONDAY){
-            day = "1";
-        }else if(weekday == Calendar.TUESDAY){
-            day = "2";
-        }else if(weekday == Calendar.WEDNESDAY){
-            day = "3";
-        }else if(weekday == Calendar.THURSDAY){
-            day = "4";
-        }else if(weekday == Calendar.FRIDAY){
-            day = "5";
-        }else if(weekday == Calendar.SATURDAY){
-            day = "6";
-        }else{
-            day = "7";
-        }
-
-        String whereClause = "weekday_" + day + " = 1 ";
-
-        return mDb.query(
+        String whereClause = ReminderContract.ReminderlistEntry.COLUMN_MEDICINE + " = '" + reminder.medicine +"' ";
+        Cursor cursor = mDb.query(
                 ReminderContract.ReminderlistEntry.TABLE_NAME,
                 null,
                 whereClause,
                 null,
                 null,
                 null,
-                ReminderContract.ReminderlistEntry.COLUMN_TIME_REMIND
+                null
         );
+
+        if(cursor.getCount() == 0){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
+    // read from db
+    private Cursor getAllReminders(String date){
+
+
+        String whereClause = ReminderContract.ReminderlistEntry.COLUMN_REMINDDAY + " = '" + date + "' ";
+//        String whereClause = ReminderContract.ReminderlistEntry.COLUMN_REMINDDAY + " = 2017-06-18 ";
+//        String whereClause = ReminderContract.ReminderlistEntry.COLUMN_REMINDDAY + " = '2017-06-18' ";
+
+        return mDb.query(
+                ReminderContract.ReminderlistEntry.TABLE_NAME,
+                null,
+                whereClause,
+//                null,
+                null,
+                null,
+                null,
+                ReminderContract.ReminderlistEntry.COLUMN_REMINDTIME
+        );
+
+
     }
 
 

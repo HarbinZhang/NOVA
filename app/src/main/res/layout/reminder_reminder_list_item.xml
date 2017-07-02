@@ -16,7 +16,7 @@
 
     <TextView
         android:id="@+id/reminder_medicine_text_view"
-        android:layout_width="40dp"
+        android:layout_width="80dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
         android:fontFamily="sans-serif"
@@ -26,8 +26,8 @@
         android:text="--"/>
 
     <TextView
-        android:id="@+id/reminder_dosage_text_view"
-        android:layout_width="40dp"
+        android:id="@+id/reminder_strength_text_view"
+        android:layout_width="240dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
         android:fontFamily="sans-serif"
@@ -37,25 +37,16 @@
         android:text="0"/>
 
     <TextView
-        android:id="@+id/reminder_NO_text_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_weight="1"
+        android:id="@+id/reminder_remindTime_text_view"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
         android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp"
-        android:text="--"/>
+        android:text="0"/>
 
-
-    <TextView
-        android:id="@+id/reminder_info_text_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_weight="1"
-        android:fontFamily="sans-serif"
-        android:textSize="16sp"
-        android:text="--"/>
 
 
     <Switch
