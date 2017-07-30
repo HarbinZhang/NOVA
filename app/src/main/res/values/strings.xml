@@ -40,16 +40,10 @@
     <string name="action_week_view">Week view</string>
 
 
+    <!--<string name="host">ns37269.ip-91-121-3.eu</string>-->
+    <!--<string name="host">10.0.0.114</string>-->
+    <string name="host">35.2.142.239</string>
+    <string name="port">3000</string>
+    <string name="action_settings">Options</string>
 
-    <string name="welcome_to_appauth">Welcome to AppAuth Codelab</string>
-    <string name="make_api_call">Make API Call</string>
-    <string name="make_authorization_request">Make Authorization Request</string>
-    <string name="sign_out">Sign Out</string>
-    <string name="request_complete">API Call Successful.</string>
-    <string name="request_failed">API Call Failed.</string>
-
-    <!-- tools -->
-    <string name="tools_given_name">Some FirstName</string>
-    <string name="tools_family_name">LastName</string>
-    <string name="tools_full_name">Some FirstName LastName</string>
 </resources>

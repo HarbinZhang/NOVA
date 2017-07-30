@@ -3,10 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/NOVA.iml" filepath="$PROJECT_DIR$/NOVA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NOVA-master.iml" filepath="$PROJECT_DIR$/NOVA-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/alarmApp/alarmApp.iml" filepath="$PROJECT_DIR$/alarmApp/alarmApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/alarmmanagerclock/alarmmanagerclock.iml" filepath="$PROJECT_DIR$/alarmmanagerclock/alarmmanagerclock.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/oauthio/oauthio.iml" filepath="$PROJECT_DIR$/oauthio/oauthio.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webrtc-client/webrtc-client.iml" filepath="$PROJECT_DIR$/webrtc-client/webrtc-client.iml" />
     </modules>
   </component>
 </project>

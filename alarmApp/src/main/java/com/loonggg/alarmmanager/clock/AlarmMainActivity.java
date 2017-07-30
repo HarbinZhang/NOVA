@@ -56,6 +56,8 @@ public class AlarmMainActivity extends AppCompatActivity implements View.OnClick
     private int period_value;
     private TextView tv_period_value;
     private TextView tv_time_value;
+
+    private TextView debug;
     private SQLiteDatabase mDb;
     private EditText mNewMedicineEditText, mNewDosageEditText,
             mNewNOofDosageEditText, mNewinfoEditText, mNewProgressEditText;
@@ -71,7 +73,6 @@ public class AlarmMainActivity extends AppCompatActivity implements View.OnClick
     private EditText et_medincineName, et_strength, et_duration;
 
 
-    private TextView debug;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
