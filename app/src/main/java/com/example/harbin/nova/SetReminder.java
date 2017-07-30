@@ -247,6 +247,8 @@ public class SetReminder extends AppCompatActivity {
                         today_date
                 ));
             }
+
+
         }).attachToRecyclerView(reminderRecyclerView);
 
 
@@ -360,8 +362,6 @@ public class SetReminder extends AppCompatActivity {
 //        dialog = builder.create();
 //
 //        dialog.show();
-
-
 
     }
 

@@ -1,1 +1,2 @@
-include ':app', ':alarmmanagerclock', ':alarmApp'
+include ':app', ':alarmmanagerclock', ':alarmApp', ':oauthio'
+project(':oauthio').projectDir = new File('oauthio')

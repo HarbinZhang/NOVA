@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.harbin.nova.Vitals">
+
+
+    <Button
+        android:id="@+id/btn_discoveryAM3S"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Discovery AM3S Device"
+        android:onClick="discoveryAM3S"/>
+
+    <Button
+        android:id="@+id/btn_discoveryBP5"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Discovery BP5 Device"
+        android:onClick="discoveryBP5"/>
+
+    <Button
+        android:id="@+id/btn_discoveryBP3L"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Discovery BP3l Device"
+        android:onClick="discoveryBP3l"/>
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="login"/>
+
+</LinearLayout>

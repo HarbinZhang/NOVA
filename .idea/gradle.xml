@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/alarmApp" />
             <option value="$PROJECT_DIR$/alarmmanagerclock" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/oauthio" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

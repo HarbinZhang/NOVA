@@ -1,12 +1,15 @@
 package com.example.harbin.nova;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -23,9 +26,31 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
 
     private SQLiteDatabase mDb;
 
+    private static SharedPreferences pres;
+    private static SharedPreferences.Editor editor;
+
+    private String[] times = new String[6];
+
+    final static private String[] remindTimeName = {"beforeBreakfastTime", "afterBreakfastTime", "beforeLunchTime",
+            "afterLunchTime", "beforeDinnerTime", "afterDinnerTime"};
+
     public ReminderListAdapter(Context context, Cursor cursor){
         this.mContext = context;
         this.mCursor = cursor;
+
+        pres = PreferenceManager.getDefaultSharedPreferences(context);
+        editor = pres.edit();
+
+
+
+        times[0] = pres.getString("beforeBreakfastTime", null);
+        times[1] = pres.getString("afterBreakfastTime", null);
+        times[2] = pres.getString("beforeLunchTime", null);
+        times[3] = pres.getString("afterLunchTime", null);
+        times[4] = pres.getString("beforeDinnerTime", null);
+        times[5] = pres.getString("afterDinnerTime", null);
+
+
 
         ReminderDbHelper dbHelper = new ReminderDbHelper(context);
         mDb = dbHelper.getWritableDatabase();
@@ -55,8 +80,18 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
         holder.itemView.setTag(id);
         holder.medicineTextView.setText(medicine);
         holder.strengthTextView.setText(strength);
-        holder.remindTime.setText(time);
+        holder.remindTime.setText(times[Integer.valueOf(time)-1]);
 
+
+        if(strength.contains("tablet")){
+            holder.imageView.setImageResource(R.drawable.tablet);
+        }else if(strength.contains("capsule")){
+            holder.imageView.setImageResource(R.drawable.capsule);
+        }else if(strength.contains("spoon")){
+            holder.imageView.setImageResource(R.drawable.spoon);
+        }else{
+            holder.imageView.setImageResource(R.drawable.unknown);
+        }
 
 /*
 //        final String medicine = mCursor.getString(mCursor.getColumnIndex(ReminderContract.ReminderlistEntry.COLUMN_MEDICINE));
@@ -146,6 +181,7 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
         TextView medicineTextView;
         TextView strengthTextView;
         TextView remindTime;
+        ImageView imageView;
 //        TextView dosageTextView;
 //        TextView NOofDosageTextView;
 //        TextView infoTextView;
@@ -161,6 +197,7 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
             medicineTextView = (TextView) itemView.findViewById(R.id.reminder_medicine_text_view);
             strengthTextView = (TextView) itemView.findViewById(R.id.reminder_strength_text_view);
             remindTime = (TextView) itemView.findViewById(R.id.reminder_remindTime_text_view);
+            imageView = (ImageView) itemView.findViewById(R.id.image_reminder);
 //            dosageTextView = (TextView) itemView.findViewById(R.id.reminder_dosage_text_view);
 //            NOofDosageTextView = (TextView) itemView.findViewById(R.id.reminder_NO_text_view);
 //            infoTextView = (TextView) itemView.findViewById(R.id.reminder_info_text_view);

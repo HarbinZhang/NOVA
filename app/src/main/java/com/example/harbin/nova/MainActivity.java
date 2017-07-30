@@ -55,13 +55,24 @@ public class MainActivity extends AppCompatActivity {
         mDb = dbHelper.getWritableDatabase();
 
 
+    }
+
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+
         if(mFirebaseUser == null){
-//            startActivity(new Intent(this, LoginActivity.class));
-        }else{
+            startActivity(new Intent(this, LoginActivity.class));
+        }else {
             mUserId = mFirebaseUser.getUid();
 
             final SharedPreferences prefs = getSharedPreferences("NOVA_data", MODE_PRIVATE);
-            String userID = prefs.getString("userID","hi");
+            String userID = prefs.getString("userID", "hi");
             debug.setText(userID);
 
             Query doctorIDQuery = mDatabase.child("users").child(mUserId).child("doctorID");
@@ -79,22 +90,8 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-
-
-//            AlarmID alarmID = new AlarmID();
-//            debug.setText(String.valueOf(alarmID.pollID()));
         }
 
-
-
-
-
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
 
     }
 
@@ -146,4 +143,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(goto_appointment);
     }
 
+    public void goto_setting(View view){
+        Intent goto_setting = new Intent(this, Setting.class);
+        startActivity(goto_setting);
+    }
+
+    public void goto_vitals(View view){
+        Intent goto_vitals = new Intent(this, OAuthActivity.class);
+        startActivity(goto_vitals);
+    }
 }

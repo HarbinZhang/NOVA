@@ -50,4 +50,18 @@
         android:text="sign_in"
         android:onClick="sign_in_click"
         />
+
+    <Button
+        android:id="@+id/btn_main_go_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Setting"
+        android:onClick="goto_setting"/>
+    
+    <Button
+        android:id="@+id/btn_main_go_vitals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vitals"
+        android:onClick="goto_vitals"/>
 </LinearLayout>

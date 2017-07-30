@@ -189,6 +189,7 @@ public class SignupActivity extends AppCompatActivity {
                                     SharedPreferences.Editor editor = prefs.edit();
                                     editor.putString("userID", mUserId);
                                     editor.putString("doctorID", doctorName_map.get("key"));
+                                    editor.putString("userEmail", email);
                                     editor.commit();
 
 
