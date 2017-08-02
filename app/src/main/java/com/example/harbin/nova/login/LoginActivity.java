@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String email = inputEmail.getText().toString();
+                String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
@@ -115,7 +115,6 @@ public class LoginActivity extends AppCompatActivity {
                                     SharedPreferences prefs = getSharedPreferences("NOVA_data", MODE_PRIVATE);
                                     SharedPreferences.Editor editor = prefs.edit();
                                     editor.putString("userID", userID);
-                                    editor.putString("userEmail", email);
                                     editor.commit();
 
                                     finish();

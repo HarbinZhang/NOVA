@@ -1,5 +1,9 @@
 package com.example.harbin.nova;
 
+import android.app.ActivityManager;
+import android.content.Context;
+import android.widget.Button;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -25,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.loonggg.alarmmanager.clock.data.ReminderContract;
 import com.loonggg.alarmmanager.clock.data.ReminderDbHelper;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView debug;
@@ -35,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
 
     private SQLiteDatabase mDb;
+    public String output;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,24 +61,13 @@ public class MainActivity extends AppCompatActivity {
         mDb = dbHelper.getWritableDatabase();
 
 
-    }
-
-
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-
-
         if(mFirebaseUser == null){
-            startActivity(new Intent(this, LoginActivity.class));
-        }else {
+//            startActivity(new Intent(this, LoginActivity.class));
+        }else{
             mUserId = mFirebaseUser.getUid();
 
             final SharedPreferences prefs = getSharedPreferences("NOVA_data", MODE_PRIVATE);
-            String userID = prefs.getString("userID", "hi");
+            String userID = prefs.getString("userID","hi");
             debug.setText(userID);
 
             Query doctorIDQuery = mDatabase.child("users").child(mUserId).child("doctorID");
@@ -84,14 +79,96 @@ public class MainActivity extends AppCompatActivity {
                     editor.putString("doctorID", id);
                     editor.commit();
                 }
-
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
             });
-        }
+            Query patientFirstnameQuery = mDatabase.child("users").child(mUserId).child("firstname");
+            patientFirstnameQuery.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String firstName = dataSnapshot.getValue(String.class);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("firstname", firstName);
+                    editor.commit();
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+            Query patientLastnameQuery = mDatabase.child("users").child(mUserId).child("lastname");
+            patientLastnameQuery.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String firstName = dataSnapshot.getValue(String.class);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("lastname", firstName);
+                    editor.commit();
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+            Query doctorFirstnameQuery = mDatabase.child("users").child(mUserId).child("doctorFirstname");
+            doctorFirstnameQuery.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String firstName = dataSnapshot.getValue(String.class);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("doctorFirstname", firstName);
+                    editor.commit();
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+            Query doctorLastnameQuery = mDatabase.child("users").child(mUserId).child("doctorLastname");
+            doctorLastnameQuery.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String lastName = dataSnapshot.getValue(String.class);
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("doctorLastname", lastName);
+                    editor.commit();
+                    boolean result=isMyServiceRunning(MyService.class);
+                    if(!result) {
+                        Intent serviceIntent = new Intent(getBaseContext(), MyService.class);
+                        serviceIntent.putExtra("uid", mUserId);
+                        String doctorId = prefs.getString("doctorID", "");
+                        serviceIntent.putExtra("doctorId", doctorId);
+                        startService(serviceIntent);
+                    }
+                    //startService(new Intent(getBaseContext(), MyService.class));
+                    change_button_text();
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
 
+//            AlarmID alarmID = new AlarmID();
+//            debug.setText(String.valueOf(alarmID.pollID()));
+
+
+        }
+//        final SharedPreferences prefs = getSharedPreferences("NOVA_data", MODE_PRIVATE);
+//        String firstName=prefs.getString("doctorFirstname", "not");
+//        String lastName=prefs.getString("doctorLastname", "available");
+//        String output="Call "+firstName+" "+lastName;
+//        Button button_call_doctor = (Button)findViewById(R.id.button_call_doctor);
+//        button_call_doctor.setText(output);
+
+
+
+
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
     }
 
@@ -143,13 +220,31 @@ public class MainActivity extends AppCompatActivity {
         startActivity(goto_appointment);
     }
 
-    public void goto_setting(View view){
-        Intent goto_setting = new Intent(this, Setting.class);
-        startActivity(goto_setting);
+    public void Btn_call_doctor_click(View view){
+        Intent call_doctor_click = new Intent(this, RtcActivity.class);
+        call_doctor_click.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        call_doctor_click.putExtra("isCalling", "yes");
+        startActivity(call_doctor_click);
     }
 
-    public void goto_vitals(View view){
-        Intent goto_vitals = new Intent(this, OAuthActivity.class);
-        startActivity(goto_vitals);
+    public void change_button_text(){
+        final SharedPreferences prefs = getSharedPreferences("NOVA_data", MODE_PRIVATE);
+        String firstName=prefs.getString("doctorFirstname", "not");
+        String lastName=prefs.getString("doctorLastname", "available");
+        output="Call "+firstName+" "+lastName;
+        Button button_call_doctor = (Button)findViewById(R.id.button_call_doctor);
+        button_call_doctor.setText(output);
     }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
+

@@ -41,9 +41,6 @@ public abstract class AppointmentActivity extends AppCompatActivity implements W
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
     private WeekView mWeekView;
 
-    private String userEmail;
-    private SharedPreferences prefs;
-
     protected FirebaseUser mFirebaseUser;
     protected DatabaseReference mDatabase;
     protected String mUserId;
@@ -52,8 +49,6 @@ public abstract class AppointmentActivity extends AppCompatActivity implements W
     protected User mUser;
 
     protected List<WeekViewEvent> onlineEvents = new ArrayList<WeekViewEvent>();
-
-    private int startHour, endHour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +61,106 @@ public abstract class AppointmentActivity extends AppCompatActivity implements W
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
-        prefs = getSharedPreferences("NOVA_data", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("NOVA_data", MODE_PRIVATE);
         doctorID = prefs.getString("doctorID","");
 
 
-        initQuery();
+
+
+        Query mAppointmentQuery = mDatabase.child("doctors").child(doctorID).child("appointments");
+        mAppointmentQuery.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                AppointmentInfo info = dataSnapshot.getValue(AppointmentInfo.class);
+//                String [] days = info.startDay.split("-");
+//                Calendar startTime = Calendar.getInstance();
+//                startTime.set(Calendar.HOUR_OF_DAY, info.startTime);
+//                startTime.set(Calendar.MINUTE, 0);
+//                startTime.set(Calendar.MONTH, Integer.valueOf(days[1]));
+//                startTime.set(Calendar.YEAR, Integer.valueOf(days[0]));
+//                startTime.set(Calendar.DAY_OF_MONTH, Integer.valueOf(days[2]));
+
+                Calendar startTime = Calendar.getInstance();
+                startTime.set(Calendar.HOUR_OF_DAY, info.startTime);
+                startTime.set(Calendar.MINUTE, 0);
+                startTime.set(Calendar.MONTH, info.startMonth - 1);
+                startTime.set(Calendar.YEAR, info.startYear);
+                startTime.set(Calendar.DAY_OF_MONTH, info.startDay);
+
+
+
+
+                Calendar endTime = (Calendar) startTime.clone();
+                endTime.add(Calendar.HOUR, 1);
+
+                WeekViewEvent event = new WeekViewEvent(2, info.firstname + " " + info.lastname, startTime, endTime);
+                event.setColor(getResources().getColor(R.color.event_color_01));
+                onlineEvents.add(event);
+
+                getWeekView().notifyDatasetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                AppointmentInfo info = dataSnapshot.getValue(AppointmentInfo.class);
+
+                Calendar startTime = Calendar.getInstance();
+                startTime.set(Calendar.HOUR_OF_DAY, info.startTime);
+                startTime.set(Calendar.MINUTE, 0);
+                startTime.set(Calendar.MONTH, info.startMonth - 1);
+                startTime.set(Calendar.YEAR, info.startYear);
+                startTime.set(Calendar.DAY_OF_MONTH, info.startDay);
+
+                Calendar endTime = (Calendar) startTime.clone();
+                endTime.add(Calendar.HOUR, 1);
+
+                WeekViewEvent event = new WeekViewEvent(2, info.firstname + " " + info.lastname, startTime, endTime);
+                event.setColor(getResources().getColor(R.color.event_color_01));
+                onlineEvents.remove(event);
+
+
+                getWeekView().goToToday();
+//                getWeekView().notifyDatasetChanged();
+//                getWeekView().notifyDatasetChanged();
+//                getWeekView().notifyDatasetChanged();
+//                getWeekView().notifyDatasetChanged();
+//                getWeekView().notifyDatasetChanged();
+//                getWeekView().notifyDatasetChanged();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+        Query mUserQuery = mDatabase.child("users").child(mUserId);
+        mUserQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mUser = dataSnapshot.getValue(User.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.appointment_weekView);
@@ -88,9 +178,6 @@ public abstract class AppointmentActivity extends AppCompatActivity implements W
         mWeekView.setEmptyViewLongPressListener(this);
 
         setupDateTimeInterpreter(false);
-
-
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -256,7 +343,7 @@ public abstract class AppointmentActivity extends AppCompatActivity implements W
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                         AppointmentInfo info = new AppointmentInfo(hour, mUser.firstname, mUser.lastname,
-                                prefs.getString("userEmail", "b@qq.com"), year, month, day);
+                                mUser.email, year, month, day);
                         String timeKey = String.valueOf(year) + "_" + String.valueOf(month) + "_" +
                                 String.valueOf(day) + "_" + String.valueOf(hour);
                         mDatabase.child("doctors").child(doctorID).child("appointments").child(timeKey).setValue(info);
@@ -282,137 +369,4 @@ public abstract class AppointmentActivity extends AppCompatActivity implements W
     public WeekView getWeekView() {
         return mWeekView;
     }
-
-    private void initQuery(){
-        Query mAppointmentQuery = mDatabase.child("doctors").child(doctorID).child("appointments");
-        mAppointmentQuery.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                AppointmentInfo info = dataSnapshot.getValue(AppointmentInfo.class);
-//                String [] days = info.startDay.split("-");
-//                Calendar startTime = Calendar.getInstance();
-//                startTime.set(Calendar.HOUR_OF_DAY, info.startTime);
-//                startTime.set(Calendar.MINUTE, 0);
-//                startTime.set(Calendar.MONTH, Integer.valueOf(days[1]));
-//                startTime.set(Calendar.YEAR, Integer.valueOf(days[0]));
-//                startTime.set(Calendar.DAY_OF_MONTH, Integer.valueOf(days[2]));
-
-                Calendar startTime = Calendar.getInstance();
-                startTime.set(Calendar.HOUR_OF_DAY, info.startTime);
-                startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, info.startMonth - 1);
-                startTime.set(Calendar.YEAR, info.startYear);
-                startTime.set(Calendar.DAY_OF_MONTH, info.startDay);
-
-
-
-
-                Calendar endTime = (Calendar) startTime.clone();
-                endTime.add(Calendar.HOUR, 1);
-
-
-                final SharedPreferences prefs = getSharedPreferences("NOVA_data", MODE_PRIVATE);
-                userEmail = prefs.getString("userEmail","@");
-
-                WeekViewEvent event;
-                if (info.email.equals(userEmail)){
-                    event = new WeekViewEvent(2, info.firstname + " " + info.lastname, startTime, endTime);
-                }else{
-                    event = new WeekViewEvent(2, "Occupied", startTime, endTime);
-                }
-
-                event.setColor(getResources().getColor(R.color.event_color_01));
-                onlineEvents.add(event);
-
-                getWeekView().notifyDatasetChanged();
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                AppointmentInfo info = dataSnapshot.getValue(AppointmentInfo.class);
-
-                Calendar startTime = Calendar.getInstance();
-                startTime.set(Calendar.HOUR_OF_DAY, info.startTime);
-                startTime.set(Calendar.MINUTE, 0);
-                startTime.set(Calendar.MONTH, info.startMonth - 1);
-                startTime.set(Calendar.YEAR, info.startYear);
-                startTime.set(Calendar.DAY_OF_MONTH, info.startDay);
-
-                Calendar endTime = (Calendar) startTime.clone();
-                endTime.add(Calendar.HOUR, 1);
-
-                WeekViewEvent event = new WeekViewEvent(2, info.firstname + " " + info.lastname, startTime, endTime);
-                event.setColor(getResources().getColor(R.color.event_color_01));
-                onlineEvents.remove(event);
-
-
-                getWeekView().goToToday();
-//                getWeekView().notifyDatasetChanged();
-//                getWeekView().notifyDatasetChanged();
-//                getWeekView().notifyDatasetChanged();
-//                getWeekView().notifyDatasetChanged();
-//                getWeekView().notifyDatasetChanged();
-//                getWeekView().notifyDatasetChanged();
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-
-        Query mUserQuery = mDatabase.child("users").child(mUserId);
-        mUserQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mUser = dataSnapshot.getValue(User.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-
-        Query mStartHourQuery = mDatabase.child("doctors").child(doctorID).child("startTime");
-        mStartHourQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                startHour = Integer.valueOf(dataSnapshot.getValue(String.class));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        Query mEndHourQuery = mDatabase.child("doctors").child(doctorID).child("endTime");
-        mEndHourQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                endHour = Integer.valueOf(dataSnapshot.getValue(String.class));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
 }

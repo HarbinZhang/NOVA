@@ -1,5 +1,6 @@
 package com.example.harbin.nova;
 
+import android.app.ActivityManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -247,13 +248,22 @@ public class SetReminder extends AppCompatActivity {
                         today_date
                 ));
             }
-
-
         }).attachToRecyclerView(reminderRecyclerView);
 
+        boolean result=isMyServiceRunning(MyService.class);
 
 
 
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -362,6 +372,8 @@ public class SetReminder extends AppCompatActivity {
 //        dialog = builder.create();
 //
 //        dialog.show();
+
+
 
     }
 
