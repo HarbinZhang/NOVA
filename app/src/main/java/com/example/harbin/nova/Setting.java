@@ -3,7 +3,10 @@ package com.example.harbin.nova;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
@@ -22,11 +25,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.loonggg.alarmmanager.clock.data.ReminderContract;
+import com.loonggg.alarmmanager.clock.data.ReminderDbHelper;
+import com.loonggg.lib.alarmmanager.clock.AlarmManagerUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Setting extends AppCompatActivity implements View.OnClickListener {
 
@@ -52,14 +60,25 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
 
     private ArrayList<TextView> tvs_array = new ArrayList<TextView>();
 
+    static private Context mContext;
+
+    private static SQLiteDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        mContext = this;
+
+//        AlarmManagerUtil.setAlarm(mContext, 0, 12, 38, 247, 0, "haha ceshi", 1, 0);
+
         pres = PreferenceManager.getDefaultSharedPreferences(this);
         editor = pres.edit();
+
+
+        ReminderDbHelper dbHelper = new ReminderDbHelper(this);
+        mDb = dbHelper.getReadableDatabase();
 
 
         tv_bbfT = (TextView) findViewById(R.id.tv_setting_before_breakfast);
@@ -177,10 +196,37 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             // Do something with the time chosen by the user
-            String time = String.valueOf(hourOfDay)+":"+String.valueOf(minute);
+            String time;
+            if(minute < 10){
+                time = String.valueOf(hourOfDay)+":"+ "0" + String.valueOf(minute);
+            }else {
+                time = String.valueOf(hourOfDay) + ":" + String.valueOf(minute);
+            }
             editor.putString(remindTimeName[curtTv], time);
             editor.apply();
             mDatabase.child("users").child(mUserId).child("remindTime").child(String.valueOf(curtTv)).setValue(time);
+
+            Cursor cursor = getIndexReminder(curtTv);
+            Set<Integer> IDs = new HashSet<>();
+            HashMap<Integer, String> id2name= new HashMap<>();
+            if(cursor.moveToFirst()){
+                do{
+                    int id = cursor.getInt(cursor.getColumnIndex(ReminderContract.ReminderlistEntry.COLUMN_ALARMID));
+                    String name = cursor.getString(cursor.getColumnIndex(ReminderContract.ReminderlistEntry.COLUMN_MEDICINE));
+                    IDs.add(id);
+                    if(!id2name.containsKey(id)){
+                        id2name.put(id, name);
+                    }
+                }while(cursor.moveToNext());
+            }
+            for(int id : IDs){
+                AlarmManagerUtil.cancelAlarm(mContext, AlarmManagerUtil.ALARM_ACTION, id);
+                AlarmManagerUtil.setAlarm(mContext, 1, hourOfDay, minute, id, 0, id2name.get(id), 1, 7);
+            }
+
+
+//            AlarmManagerUtil.cancelAlarm(mContext, AlarmManagerUtil.ALARM_ACTION, 247);
+//            AlarmManagerUtil.setAlarm(mContext, 0, 12, 44, 247, 0, "haha cesh", 1, 0);
 
         }
     }
@@ -189,6 +235,18 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
     public void showTimePicker(){
         DialogFragment newFragment = new TimePickerFragment();
         newFragment.show(getSupportFragmentManager(), "timePicker");
+    }
+
+
+    private static Cursor getIndexReminder(int index){
+
+        return mDb.query(ReminderContract.ReminderlistEntry.TABLE_NAME,
+                null,
+                ReminderContract.ReminderlistEntry.COLUMN_REMINDTIME + " = " + String.valueOf(index+1),
+                null,
+                null,
+                null,
+                null);
     }
 
 

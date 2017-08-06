@@ -3,13 +3,16 @@ package com.example.harbin.nova;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +32,7 @@ import com.loonggg.lib.alarmmanager.clock.AlarmManagerUtil;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 
 public class SetReminder extends AppCompatActivity {
@@ -58,6 +62,15 @@ public class SetReminder extends AppCompatActivity {
 
     String today_date;
 
+    private SharedPreferences pres;
+    private SharedPreferences.Editor editor;
+
+    final static private String[] remindTimeName = {"beforeBreakfastTime", "afterBreakfastTime", "beforeLunchTime",
+            "afterLunchTime", "beforeDinnerTime", "afterDinnerTime"};
+    final static private String[] remindTimeValue = {"7:00", "8:00", "12:00", "13:00", "18:00" , "19:00"};
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,10 +83,8 @@ public class SetReminder extends AppCompatActivity {
         reminderRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-
-
-
-
+        pres = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = pres.edit();
 
 
 
@@ -113,26 +124,50 @@ public class SetReminder extends AppCompatActivity {
                     Calendar cal = Calendar.getInstance();
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     cal.setTime(dateFormat.parse(newDate));
+                    HashMap<Integer, Reminder> idToReminder = new HashMap<Integer, Reminder>();
+
 
                     int i = 0;
                     while (i * reminder.period <= reminder.duration * 7){
 
                         for(String time : reminder.time.split(",")){
+                            int alarmID = reminder.alarmId + Integer.valueOf(time);
+
+
 
                             ContentValues cv = new ContentValues();
                             cv.put(ReminderContract.ReminderlistEntry.COLUMN_MEDICINE, reminder.medicine);
                             cv.put(ReminderContract.ReminderlistEntry.COLUMN_STRENGTH, reminder.strength);
                             cv.put(ReminderContract.ReminderlistEntry.COLUMN_REMINDTIME, Integer.valueOf(time));
                             cv.put(ReminderContract.ReminderlistEntry.COLUMN_REMINDDAY, newDate);
+                            cv.put(ReminderContract.ReminderlistEntry.COLUMN_ALARMID, alarmID);
                             mDb.insert(ReminderContract.ReminderlistEntry.TABLE_NAME, null, cv);
-
+                            if(!idToReminder.containsKey(alarmID)){
+                                idToReminder.put(alarmID, reminder);
+                            }
                         }
+
 
                         cal.add(Calendar.DATE, reminder.period);
                         i++;
                         newDate = dateFormat.format(cal.getTime());
 
                     }
+
+                    for (int alarmID : idToReminder.keySet()){
+                        int index = alarmID % 10 - 1;
+                        String time = pres.getString(remindTimeName[index], remindTimeValue[index]);
+                        int hour = Integer.valueOf(time.split(":")[0]);
+                        int min = Integer.valueOf(time.split(":")[1]);
+                        AlarmManagerUtil.setAlarm(mContext,0,hour,min,alarmID,0,idToReminder.get(alarmID).medicine,1,7);
+                    }
+
+
+
+                    Log.d("Info: ","child added sync done");
+
+
+
 
                 }catch (Exception e){
 
@@ -176,12 +211,14 @@ public class SetReminder extends AppCompatActivity {
                     while (i * reminder.period <= reminder.duration * 7){
 
                         for(String time : reminder.time.split(",")){
+                            int alarmID = reminder.alarmId + Integer.valueOf(time);
 
                             ContentValues cv = new ContentValues();
                             cv.put(ReminderContract.ReminderlistEntry.COLUMN_MEDICINE, reminder.medicine);
                             cv.put(ReminderContract.ReminderlistEntry.COLUMN_STRENGTH, reminder.strength);
                             cv.put(ReminderContract.ReminderlistEntry.COLUMN_REMINDTIME, Integer.valueOf(time));
                             cv.put(ReminderContract.ReminderlistEntry.COLUMN_REMINDDAY, newDate);
+                            cv.put(ReminderContract.ReminderlistEntry.COLUMN_ALARMID, alarmID);
                             mDb.insert(ReminderContract.ReminderlistEntry.TABLE_NAME, null, cv);
 
                         }

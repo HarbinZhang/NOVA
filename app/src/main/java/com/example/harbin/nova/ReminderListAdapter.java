@@ -34,6 +34,8 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
     final static private String[] remindTimeName = {"beforeBreakfastTime", "afterBreakfastTime", "beforeLunchTime",
             "afterLunchTime", "beforeDinnerTime", "afterDinnerTime"};
 
+    final static private String[] remindTimeValue = {"7:00", "8:00", "12:00", "13:00", "18:00" , "19:00"};
+
     public ReminderListAdapter(Context context, Cursor cursor){
         this.mContext = context;
         this.mCursor = cursor;
@@ -43,12 +45,12 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
 
 
 
-        times[0] = pres.getString("beforeBreakfastTime", null);
-        times[1] = pres.getString("afterBreakfastTime", null);
-        times[2] = pres.getString("beforeLunchTime", null);
-        times[3] = pres.getString("afterLunchTime", null);
-        times[4] = pres.getString("beforeDinnerTime", null);
-        times[5] = pres.getString("afterDinnerTime", null);
+        times[0] = pres.getString("beforeBreakfastTime", remindTimeValue[0]);
+        times[1] = pres.getString("afterBreakfastTime", remindTimeValue[1]);
+        times[2] = pres.getString("beforeLunchTime", remindTimeValue[2]);
+        times[3] = pres.getString("afterLunchTime", remindTimeValue[3]);
+        times[4] = pres.getString("beforeDinnerTime", remindTimeValue[4]);
+        times[5] = pres.getString("afterDinnerTime", remindTimeValue[5]);
 
 
 

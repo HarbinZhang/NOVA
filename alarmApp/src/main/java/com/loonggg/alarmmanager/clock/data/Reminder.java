@@ -2,9 +2,6 @@ package com.loonggg.alarmmanager.clock.data;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Harbin on 6/5/17.
  */
@@ -19,7 +16,8 @@ public class Reminder {
     public String time;
     public int duration;
     public String startTime;
-    public List<Integer> alarmId = new ArrayList<>();
+//    public List<Integer> alarmId = new ArrayList<>();
+    public int alarmId;
 
     public Reminder(){
 
@@ -32,9 +30,7 @@ public class Reminder {
         this.time = time;
         this.duration = duration;
         this.startTime = date;
-        for (int i=0; i<6; i++){
-            this.alarmId.add(id + i);
-        }
+        this.alarmId = id;
     }
 
 

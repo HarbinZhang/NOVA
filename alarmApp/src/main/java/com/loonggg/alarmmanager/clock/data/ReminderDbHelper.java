@@ -28,6 +28,7 @@ public class ReminderDbHelper extends SQLiteOpenHelper {
                 ReminderContract.ReminderlistEntry.COLUMN_STRENGTH + " TEXT NOT NULL, " +
                 ReminderContract.ReminderlistEntry.COLUMN_INFO + " TEXT, " +
                 ReminderContract.ReminderlistEntry.COLUMN_REMINDDAY + " TEXT, " +
+                ReminderContract.ReminderlistEntry.COLUMN_ALARMID + " INTEGER NOT NULL," +
                 ReminderContract.ReminderlistEntry.COLUMN_REMINDTIME + " INTEGER DEFAULT 1" +
                 " );";
 
