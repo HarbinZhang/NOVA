@@ -2,6 +2,7 @@ package com.loonggg.lib.alarmmanager.clock;
 
 import android.app.Activity;
 import android.app.Service;
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -12,6 +13,8 @@ public class ClockAlarmActivity extends Activity {
     private MediaPlayer mediaPlayer;
     private Vibrator vibrator;
 
+    private Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +22,7 @@ public class ClockAlarmActivity extends Activity {
         String message = this.getIntent().getStringExtra("msg");
         int flag = this.getIntent().getIntExtra("flag", 0);
         showDialogInBroadcastReceiver(message, flag);
+        context = this;
     }
 
     private void showDialogInBroadcastReceiver(String message, final int flag) {
@@ -36,7 +40,7 @@ public class ClockAlarmActivity extends Activity {
 
         final SimpleDialog dialog = new SimpleDialog(this, R.style.Theme_dialog);
         dialog.show();
-        dialog.setTitle("Reminder");
+        dialog.setTitle("Medicine Reminder");
         dialog.setMessage(message);
         dialog.setClickListener(new View.OnClickListener() {
             @Override

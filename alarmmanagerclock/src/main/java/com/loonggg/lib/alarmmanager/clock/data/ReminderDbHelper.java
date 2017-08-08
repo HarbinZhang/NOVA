@@ -1,4 +1,4 @@
-package com.loonggg.alarmmanager.clock.data;
+package com.loonggg.lib.alarmmanager.clock.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

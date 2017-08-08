@@ -22,8 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.loonggg.alarmmanager.clock.data.ReminderContract;
-import com.loonggg.alarmmanager.clock.data.ReminderDbHelper;
+import com.loonggg.lib.alarmmanager.clock.data.ReminderContract;
+import com.loonggg.lib.alarmmanager.clock.data.ReminderDbHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             String userID = prefs.getString("userID", "hi");
             debug.setText(userID);
 
+
             Query doctorIDQuery = mDatabase.child("users").child(mUserId).child("doctorID");
             doctorIDQuery.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
+
         }
 
 

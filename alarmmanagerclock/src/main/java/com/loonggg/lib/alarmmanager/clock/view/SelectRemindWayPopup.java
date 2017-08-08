@@ -1,4 +1,4 @@
-package com.loonggg.alarmmanager.clock.view;
+package com.loonggg.lib.alarmmanager.clock.view;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.loonggg.alarmmanager.clock.R;
+import com.loonggg.lib.alarmmanager.clock.R;
 
 
 public class SelectRemindWayPopup implements OnClickListener {

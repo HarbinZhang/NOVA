@@ -1,9 +1,11 @@
 package com.example.harbin.nova.appointment;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.RectF;
 import android.os.Bundle;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
@@ -43,6 +45,7 @@ public abstract class AppointmentActivity extends AppCompatActivity implements W
 
     private String userEmail;
     private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
 
     protected FirebaseUser mFirebaseUser;
     protected DatabaseReference mDatabase;
@@ -55,11 +58,16 @@ public abstract class AppointmentActivity extends AppCompatActivity implements W
 
     private int startHour, endHour;
 
+    private AvailableTime availableTime;
+    private ContentLoadingProgressBar loadingBar;
+    private Context mContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment);
 
+        mContext = this;
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         mUserId = mFirebaseUser.getUid();
@@ -67,10 +75,13 @@ public abstract class AppointmentActivity extends AppCompatActivity implements W
 
 
         prefs = getSharedPreferences("NOVA_data", MODE_PRIVATE);
+        editor = prefs.edit();
         doctorID = prefs.getString("doctorID","");
 
+        loadingBar = (ContentLoadingProgressBar) findViewById(R.id.loading_appointment);
+        loadingBar.show();
 
-        initQuery();
+
 
         // Get a reference for the week view in the layout.
         mWeekView = (WeekView) findViewById(R.id.appointment_weekView);
@@ -88,6 +99,9 @@ public abstract class AppointmentActivity extends AppCompatActivity implements W
         mWeekView.setEmptyViewLongPressListener(this);
 
         setupDateTimeInterpreter(false);
+
+        initQuery();
+
 
 
 
@@ -203,6 +217,12 @@ public abstract class AppointmentActivity extends AppCompatActivity implements W
     public void onEventLongPress(final WeekViewEvent event, RectF eventRect) {
 //        Toast.makeText(this, "Long pressed event: " + event.getName(), Toast.LENGTH_SHORT).show();
 
+        String name = event.getName();
+        if (name.equals("Occupied")){
+            Toast.makeText(mContext, "This time has been occupied.",Toast.LENGTH_LONG).show();
+            return;
+        }
+
         AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(this);
 
         confirmBuilder.setMessage("Are you sure to cancel this appointment?")
@@ -249,6 +269,14 @@ public abstract class AppointmentActivity extends AppCompatActivity implements W
         final int year = time.get(Calendar.YEAR);
         final int month = time.get(Calendar.MONTH) + 1;
         final int day = time.get(Calendar.DAY_OF_MONTH);
+
+        if(hour < Integer.valueOf(availableTime.startTime) || hour >= Integer.valueOf(availableTime.endTime) ){
+            Toast.makeText(mContext, "This time is not valid.\nThe doctor is available in: "+availableTime.startTime +
+                        ":00 to " + availableTime.endTime + ":00", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
         confirmBuilder.setMessage("Are you sure to create an appointment in " + getPressedTime(time))
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -388,11 +416,13 @@ public abstract class AppointmentActivity extends AppCompatActivity implements W
         });
 
 
-        Query mStartHourQuery = mDatabase.child("doctors").child(doctorID).child("startTime");
-        mStartHourQuery.addValueEventListener(new ValueEventListener() {
+        Query availableHourQuery = mDatabase.child("doctors").child(doctorID).child("availableTime");
+        availableHourQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                startHour = Integer.valueOf(dataSnapshot.getValue(String.class));
+                availableTime = dataSnapshot.getValue(AvailableTime.class);
+                loadingBar.hide();
+                mWeekView.goToHour(Double.valueOf(availableTime.startTime));
             }
 
             @Override
@@ -401,18 +431,31 @@ public abstract class AppointmentActivity extends AppCompatActivity implements W
             }
         });
 
-        Query mEndHourQuery = mDatabase.child("doctors").child(doctorID).child("endTime");
-        mEndHourQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                endHour = Integer.valueOf(dataSnapshot.getValue(String.class));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        Query mStartHourQuery = mDatabase.child("doctors").child(doctorID).child("startTime");
+//        mStartHourQuery.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                startHour = Integer.valueOf(dataSnapshot.getValue(String.class));
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//
+//        Query mEndHourQuery = mDatabase.child("doctors").child(doctorID).child("endTime");
+//        mEndHourQuery.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                endHour = Integer.valueOf(dataSnapshot.getValue(String.class));
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 
 }

@@ -1,4 +1,4 @@
-package com.loonggg.alarmmanager.clock;
+package com.loonggg.lib.alarmmanager.clock;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,14 +22,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.loonggg.alarmmanager.clock.data.Reminder;
-import com.loonggg.alarmmanager.clock.data.ReminderContract;
-import com.loonggg.alarmmanager.clock.data.ReminderDbHelper;
-import com.loonggg.alarmmanager.clock.view.SelectRemindCyclePopup;
-import com.loonggg.alarmmanager.clock.view.SelectRemindPeriodPopup;
-import com.loonggg.alarmmanager.clock.view.SelectRemindTimePopup;
-import com.loonggg.alarmmanager.clock.view.SelectRemindWayPopup;
-import com.loonggg.lib.alarmmanager.clock.AlarmManagerUtil;
+import com.loonggg.lib.alarmmanager.clock.data.Reminder;
+import com.loonggg.lib.alarmmanager.clock.data.ReminderContract;
+import com.loonggg.lib.alarmmanager.clock.data.ReminderDbHelper;
+import com.loonggg.lib.alarmmanager.clock.view.SelectRemindCyclePopup;
+import com.loonggg.lib.alarmmanager.clock.view.SelectRemindPeriodPopup;
+import com.loonggg.lib.alarmmanager.clock.view.SelectRemindTimePopup;
+import com.loonggg.lib.alarmmanager.clock.view.SelectRemindWayPopup;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

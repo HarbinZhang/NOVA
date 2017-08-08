@@ -1,4 +1,4 @@
-package com.example.harbin.nova;
+package com.loonggg.lib.alarmmanager.clock;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -23,11 +23,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.loonggg.lib.alarmmanager.clock.AlarmMainActivity;
 import com.loonggg.lib.alarmmanager.clock.data.Reminder;
 import com.loonggg.lib.alarmmanager.clock.data.ReminderContract;
 import com.loonggg.lib.alarmmanager.clock.data.ReminderDbHelper;
-import com.loonggg.lib.alarmmanager.clock.AlarmManagerUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,7 +40,7 @@ public class SetReminder extends AppCompatActivity {
     private SQLiteDatabase mDb;
 
 
-    private final static String LOG_TAG = MainActivity.class.getSimpleName();
+//    private final static String LOG_TAG = MainActivity.class.getSimpleName();
 
     private final String[] DAYS = {"Monday", "Tuesday","Wednesday", "Thursday",
             "Friday", "Saturday", "Sunday"};
@@ -161,8 +159,8 @@ public class SetReminder extends AppCompatActivity {
                         int min = Integer.valueOf(time.split(":")[1]);
                         AlarmManagerUtil.setAlarm(mContext,0,hour,min,alarmID,0,
                                 "Medicine: " +
-                                idToReminder.get(alarmID).medicine + "\n" +
-                                "Strength: " + idToReminder.get(alarmID).strength,
+                                        idToReminder.get(alarmID).medicine + "\n" +
+                                        "Strength: " + idToReminder.get(alarmID).strength,
                                 1,7);
                     }
 

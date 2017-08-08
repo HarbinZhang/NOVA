@@ -25,8 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.loonggg.alarmmanager.clock.data.ReminderContract;
-import com.loonggg.alarmmanager.clock.data.ReminderDbHelper;
+import com.loonggg.lib.alarmmanager.clock.data.ReminderContract;
+import com.loonggg.lib.alarmmanager.clock.data.ReminderDbHelper;
 import com.loonggg.lib.alarmmanager.clock.AlarmManagerUtil;
 
 import java.util.ArrayList;
@@ -209,19 +209,27 @@ public class Setting extends AppCompatActivity implements View.OnClickListener {
             Cursor cursor = getIndexReminder(curtTv);
             Set<Integer> IDs = new HashSet<>();
             HashMap<Integer, String> id2name= new HashMap<>();
+            HashMap<Integer, String> id2strength = new HashMap<>();
             if(cursor.moveToFirst()){
                 do{
                     int id = cursor.getInt(cursor.getColumnIndex(ReminderContract.ReminderlistEntry.COLUMN_ALARMID));
                     String name = cursor.getString(cursor.getColumnIndex(ReminderContract.ReminderlistEntry.COLUMN_MEDICINE));
+                    String strength = cursor.getString(cursor.getColumnIndex(ReminderContract.ReminderlistEntry.COLUMN_STRENGTH));
                     IDs.add(id);
                     if(!id2name.containsKey(id)){
                         id2name.put(id, name);
+                    }
+                    if(!id2strength.containsKey(id)){
+                        id2strength.put(id, strength);
                     }
                 }while(cursor.moveToNext());
             }
             for(int id : IDs){
                 AlarmManagerUtil.cancelAlarm(mContext, AlarmManagerUtil.ALARM_ACTION, id);
-                AlarmManagerUtil.setAlarm(mContext, 1, hourOfDay, minute, id, 0, id2name.get(id), 1, 7);
+                AlarmManagerUtil.setAlarm(mContext, 1, hourOfDay, minute, id, 0,
+                        "Medicine: " + id2name.get(id) + "\n" +
+                        "Strength: " + id2strength.get(id),
+                        1, 7);
             }
 
 

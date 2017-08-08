@@ -1,4 +1,5 @@
-package com.example.harbin.nova;
+package com.loonggg.lib.alarmmanager.clock;
+
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -63,7 +64,7 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
     @Override
     public ReminderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.reminder_reminder_list_item, parent, false);
+        View view = inflater.inflate(R.layout.activity_reminder_list_adapter, parent, false);
         return new ReminderViewHolder(view);
     }
 

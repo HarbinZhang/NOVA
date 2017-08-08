@@ -1,4 +1,4 @@
-package com.loonggg.alarmmanager.clock.view;
+package com.loonggg.lib.alarmmanager.clock.view;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,7 +13,8 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.loonggg.alarmmanager.clock.R;
+import com.loonggg.lib.alarmmanager.clock.R;
+
 
 public class SelectRemindCyclePopup implements OnClickListener {
     private TextView tv_mon, tv_tue, tv_wed, tv_thu, tv_fri, tv_sat, tv_sun, tv_sure, every_day,

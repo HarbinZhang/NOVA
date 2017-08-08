@@ -1,4 +1,4 @@
-package com.loonggg.alarmmanager.clock.data;
+package com.loonggg.lib.alarmmanager.clock.data;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
