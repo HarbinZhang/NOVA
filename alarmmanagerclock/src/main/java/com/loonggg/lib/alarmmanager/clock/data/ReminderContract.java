@@ -16,6 +16,7 @@ public class ReminderContract {
         public static final String COLUMN_REMINDDAY = "remindDay";
         public static final String COLUMN_REMINDTIME= "remindTime";
         public static final String COLUMN_ALARMID = "alarmID";
+        public static final String COLUMN_STATE = "remindState";
     }
 
 }

@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
+import com.loonggg.lib.alarmmanager.clock.SetReminder;
+
 /**
  * Created by Harbin on 7/24/17.
  */

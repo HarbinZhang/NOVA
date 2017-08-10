@@ -38,6 +38,7 @@
 
         <Button
             android:layout_width="0dp"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:id="@+id/reminder_days_check_box"
             android:layout_weight="1"

@@ -12,7 +12,7 @@ public class ReminderDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "Reminderlist.db";
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public ReminderDbHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -29,6 +29,7 @@ public class ReminderDbHelper extends SQLiteOpenHelper {
                 ReminderContract.ReminderlistEntry.COLUMN_INFO + " TEXT, " +
                 ReminderContract.ReminderlistEntry.COLUMN_REMINDDAY + " TEXT, " +
                 ReminderContract.ReminderlistEntry.COLUMN_ALARMID + " INTEGER NOT NULL," +
+                ReminderContract.ReminderlistEntry.COLUMN_STATE + " INTEGER DEFAULT 0, " +
                 ReminderContract.ReminderlistEntry.COLUMN_REMINDTIME + " INTEGER DEFAULT 1" +
                 " );";
 

@@ -1,6 +1,7 @@
 package com.loonggg.lib.alarmmanager.clock;
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loonggg.lib.alarmmanager.clock.data.ReminderContract;
 import com.loonggg.lib.alarmmanager.clock.data.ReminderDbHelper;
@@ -36,6 +38,8 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
             "afterLunchTime", "beforeDinnerTime", "afterDinnerTime"};
 
     final static private String[] remindTimeValue = {"7:00", "8:00", "12:00", "13:00", "18:00" , "19:00"};
+
+
 
     public ReminderListAdapter(Context context, Cursor cursor){
         this.mContext = context;
@@ -78,12 +82,21 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
         final String medicine = mCursor.getString(mCursor.getColumnIndex(ReminderContract.ReminderlistEntry.COLUMN_MEDICINE));
         final String strength = mCursor.getString(mCursor.getColumnIndex(ReminderContract.ReminderlistEntry.COLUMN_STRENGTH));
         final String time = mCursor.getString(mCursor.getColumnIndex(ReminderContract.ReminderlistEntry.COLUMN_REMINDTIME));
-        long id = mCursor.getLong(mCursor.getColumnIndex(ReminderContract.ReminderlistEntry._ID));
+        final long id = mCursor.getLong(mCursor.getColumnIndex(ReminderContract.ReminderlistEntry._ID));
+        final int state = mCursor.getInt(mCursor.getColumnIndex(ReminderContract.ReminderlistEntry.COLUMN_STATE));
 
         holder.itemView.setTag(id);
         holder.medicineTextView.setText(medicine);
         holder.strengthTextView.setText(strength);
         holder.remindTime.setText(times[Integer.valueOf(time)-1]);
+
+        if(state == 0){
+            holder.imageState.setImageResource(R.drawable.alarm_pink);
+        }else if(state == 2){
+            holder.imageState.setImageResource(R.drawable.alarm_grey);
+        }else {
+            holder.imageState.setImageResource(R.drawable.alarm_red);
+        }
 
 
         if(strength.contains("tablet")){
@@ -95,6 +108,18 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
         }else{
             holder.imageView.setImageResource(R.drawable.unknown);
         }
+
+
+        holder.imageState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (state == 1) {
+                    changeState(id);
+                    Toast.makeText(mContext, " Medicine eaten ", Toast.LENGTH_SHORT).show();
+                    holder.imageState.setImageResource(R.drawable.alarm_grey);
+                }
+            }
+        });
 
 /*
 //        final String medicine = mCursor.getString(mCursor.getColumnIndex(ReminderContract.ReminderlistEntry.COLUMN_MEDICINE));
@@ -185,6 +210,8 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
         TextView strengthTextView;
         TextView remindTime;
         ImageView imageView;
+        ImageView imageState;
+
 //        TextView dosageTextView;
 //        TextView NOofDosageTextView;
 //        TextView infoTextView;
@@ -205,8 +232,7 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
 //            NOofDosageTextView = (TextView) itemView.findViewById(R.id.reminder_NO_text_view);
 //            infoTextView = (TextView) itemView.findViewById(R.id.reminder_info_text_view);
 //            timeTextView = (TextView) itemView.findViewById(R.id.reminder_time_text_view);
-            remind_switch = (Switch) itemView.findViewById(R.id.reminder_remind_switch);
-
+            imageState = (ImageView) itemView.findViewById(R.id.image_state);
         }
 
     }
@@ -218,6 +244,27 @@ public class ReminderListAdapter extends RecyclerView.Adapter<ReminderListAdapte
                     (l + " cannot be cast to int without changing its value.");
         }
         return (int) l;
+    }
+
+
+    private void changeState(final long sqlID){
+        if(sqlID == -1){
+            return;
+        }
+
+        ContentValues cv = new ContentValues();
+        cv.put(ReminderContract.ReminderlistEntry.COLUMN_STATE, 2);
+
+        String whereClause = ReminderContract.ReminderlistEntry._ID + " = " + sqlID;
+
+        mDb.update(
+                ReminderContract.ReminderlistEntry.TABLE_NAME,
+                cv,
+                whereClause,
+                null
+        );
+
+
     }
 
 }

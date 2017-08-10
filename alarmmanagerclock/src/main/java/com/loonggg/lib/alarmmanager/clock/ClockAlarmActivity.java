@@ -3,6 +3,7 @@ package com.loonggg.lib.alarmmanager.clock;
 import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -15,17 +16,19 @@ public class ClockAlarmActivity extends Activity {
 
     private Context context;
 
+    private int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clock_alarm);
         String message = this.getIntent().getStringExtra("msg");
         int flag = this.getIntent().getIntExtra("flag", 0);
+        id = this.getIntent().getIntExtra("id",-1);
         showDialogInBroadcastReceiver(message, flag);
         context = this;
     }
 
-    private void showDialogInBroadcastReceiver(String message, final int flag) {
+    private void showDialogInBroadcastReceiver(final String message, final int flag) {
         if (flag == 1 || flag == 2) {
             mediaPlayer = MediaPlayer.create(this, R.raw.in_call_alarm);
             mediaPlayer.setLooping(true);
@@ -54,6 +57,10 @@ public class ClockAlarmActivity extends Activity {
                         vibrator.cancel();
                     }
                     dialog.dismiss();
+                    String medicine = message.split("\n")[0].split(":")[1];
+                    Intent intent = new Intent(context, SetReminder.class);
+                    intent.putExtra("id",id);
+                    startActivity(intent);
                     finish();
                 }
             }

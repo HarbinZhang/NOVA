@@ -34,7 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SetReminder" />
         <!-- <activity android:name=".ReminderListAdapter" /> -->
         <activity android:name=".login.SignupActivity" />
         <activity android:name=".login.LoginActivity" />

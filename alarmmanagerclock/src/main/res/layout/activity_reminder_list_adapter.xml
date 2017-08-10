@@ -89,13 +89,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-
-                <Switch
-                    android:id="@+id/reminder_remind_switch"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:checked="true"
-                    android:gravity="center" />
+                <ImageView
+                    android:id="@+id/image_state"
+                    android:clickable="true"
+                    android:src="@drawable/alarm_grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
 
             </LinearLayout>

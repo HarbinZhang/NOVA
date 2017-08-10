@@ -81,6 +81,7 @@ public class SetReminder extends AppCompatActivity {
         reminderRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
+
         pres = PreferenceManager.getDefaultSharedPreferences(this);
         editor = pres.edit();
 
@@ -96,11 +97,12 @@ public class SetReminder extends AppCompatActivity {
 
         ReminderDbHelper dbHelper = new ReminderDbHelper(this);
         mDb = dbHelper.getWritableDatabase();
+
+        setIfFromAlarm(getIntent().getIntExtra("id", -1));
+
         Cursor cursor = getAllReminders(today_date);
         reminderAdapter = new ReminderListAdapter(this, cursor);
         reminderRecyclerView.setAdapter(reminderAdapter);
-
-
 
 
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -290,9 +292,6 @@ public class SetReminder extends AppCompatActivity {
 
         }).attachToRecyclerView(reminderRecyclerView);
 
-
-
-
     }
 
     @Override
@@ -412,4 +411,25 @@ public class SetReminder extends AppCompatActivity {
         }
         return (int) l;
     }
+
+    private void setIfFromAlarm(final int alarmId){
+        if(alarmId == -1){
+            return;
+        }
+
+        ContentValues cv = new ContentValues();
+        cv.put(ReminderContract.ReminderlistEntry.COLUMN_STATE, 1);
+
+        String whereClause = ReminderContract.ReminderlistEntry.COLUMN_ALARMID + " = " + alarmId +
+                " AND " + ReminderContract.ReminderlistEntry.COLUMN_REMINDDAY + " = '" + today_date + "' ";
+
+        mDb.update(
+                ReminderContract.ReminderlistEntry.TABLE_NAME,
+                cv,
+                whereClause,
+                null
+        );
+
+    }
+
 }
