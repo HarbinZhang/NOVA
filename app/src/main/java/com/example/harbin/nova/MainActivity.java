@@ -2,6 +2,7 @@ package com.example.harbin.nova;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -152,7 +153,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goto_vitals(View view){
-        Intent goto_vitals = new Intent(this, OAuthActivity.class);
-        startActivity(goto_vitals);
+//        Intent goto_vitals = new Intent(this, OAuthActivity.class);
+//        startActivity(goto_vitals);
+
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        PackageManager pm = getPackageManager();
+        intent = pm.getLaunchIntentForPackage("iHealthMyVitals.V2");
+//        intent.setClassName("iHealthMyVitals","com.ihealth.main.MainActivity");
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        startActivity(intent);
+
     }
 }
