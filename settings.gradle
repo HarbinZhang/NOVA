@@ -1,2 +1,0 @@
-include ':app', ':alarmmanagerclock', ':alarmApp', ':oauthio'
-project(':oauthio').projectDir = new File('oauthio')
