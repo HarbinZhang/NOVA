@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.harbin.nova.Setting">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="right"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="Before Breakfast: " />
+
+            <TextView
+                android:id="@+id/tv_setting_before_breakfast"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btn_setting_before_breakfast"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:backgroundTint="@android:color/holo_orange_dark"
+                android:text="Change" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="right"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="After Breakfast: " />
+
+            <TextView
+                android:id="@+id/tv_setting_after_breakfast"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <Button
+                android:id="@+id/btn_setting_after_breakfast"
+                android:layout_width="0dp"
+                android:backgroundTint="@android:color/holo_orange_dark"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:text="Change"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="right"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="Before Lunch: " />
+
+            <TextView
+                android:id="@+id/tv_setting_before_lunch"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:layout_weight="2"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/btn_setting_before_lunch"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:backgroundTint="@android:color/holo_orange_dark"
+                android:layout_height="wrap_content"
+                android:text="Change"/>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="right"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="After Lunch: " />
+
+            <TextView
+                android:id="@+id/tv_setting_after_lunch"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:layout_weight="2"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/btn_setting_after_lunch"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:backgroundTint="@android:color/holo_orange_dark"
+                android:layout_height="wrap_content"
+                android:text="Change"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="right"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="Before Dinner: " />
+
+            <TextView
+                android:id="@+id/tv_setting_before_dinner"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:layout_weight="2"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/btn_setting_before_dinner"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:backgroundTint="@android:color/holo_orange_dark"
+                android:layout_height="wrap_content"
+                android:text="Change"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="right"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="After Dinner: "/>
+
+            <TextView
+                android:id="@+id/tv_setting_after_dinner"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:layout_weight="2"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/btn_setting_after_dinner"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:backgroundTint="@android:color/holo_orange_dark"
+                android:layout_height="wrap_content"
+                android:text="Change"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

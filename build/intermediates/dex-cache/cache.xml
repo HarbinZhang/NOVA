@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/Harbin/Downloads/8_10_NOVA-master/NOVA-master/app/libs/iHealthLibrary_2.2.3.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="deae3925961b0bdff0fc68a1077dd36975881625">
+        <dex dex="/Users/Harbin/Downloads/8_10_NOVA-master/NOVA-master/app/build/intermediates/pre-dexed/debug/iHealthLibrary_2.2.3_10f58bd3358bce045c312e4b76cbd0e481a1d245.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Harbin/Downloads/8_10_NOVA-master/NOVA-master/alarmmanagerclock/build/intermediates/bundles/default/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a4f3a66daffb7a104015fa460aa6663389b5a56e">
+        <dex dex="/Users/Harbin/Downloads/8_10_NOVA-master/NOVA-master/app/build/intermediates/pre-dexed/debug/classes_07409fb1c85830c5cf565147837ed50863948d01.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Harbin/Downloads/8_10_NOVA-master/NOVA-master/app/libs/btle.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="ea6d8e204f30523d008d50efde68d2cd1fe233f0">
+        <dex dex="/Users/Harbin/Downloads/8_10_NOVA-master/NOVA-master/app/build/intermediates/pre-dexed/debug/btle_d4bd979ee8d9c88d715e5fb7a53846ecdd0303d0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Harbin/Downloads/8_10_NOVA-master/NOVA-master/app/libs/pl2303driver.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="3ba27649469c1d71e1a54c0fd66a0d94856df555">
+        <dex dex="/Users/Harbin/Downloads/8_10_NOVA-master/NOVA-master/app/build/intermediates/pre-dexed/debug/pl2303driver_daf321a4699ed65e4b50daba662e4f8b91e73093.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Harbin/Downloads/8_10_NOVA-master/NOVA-master/app/libs/smartlinklib3.6.4_product.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="f5a964968f16d2dfe3a6005de3451b52b4a3089c">
+        <dex dex="/Users/Harbin/Downloads/8_10_NOVA-master/NOVA-master/app/build/intermediates/pre-dexed/debug/smartlinklib3.6.4_product_7e83e620854eb750f1c49929138d4c302ed46800.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/Harbin/Downloads/8_10_NOVA-master/NOVA-master/webrtc-client/build/intermediates/bundles/default/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="bd836e754af3b1cb61d42fb9c592c9738191c6b7">
+        <dex dex="/Users/Harbin/Downloads/8_10_NOVA-master/NOVA-master/app/build/intermediates/pre-dexed/debug/classes_4605d1c858dd7d936d729dfad4d3e64f80fcb640.jar" />
+    </item>
+
+</items>

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="android-1.0.2">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/23769bb018197599e9e7540dd05a92d1473b5bc6/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/23769bb018197599e9e7540dd05a92d1473b5bc6/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.pryv/android/1.0.2/bf48d4b6cc258a2fd2acfdbd5dcc6947a99c352b/android-1.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,2 @@
+include ':app', ':alarmmanagerclock', ':alarmApp', ':oauthio', ':webrtc-client'
+project(':oauthio').projectDir = new File('oauthio')

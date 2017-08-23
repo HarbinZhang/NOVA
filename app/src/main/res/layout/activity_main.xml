@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.harbin.nova.MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+
+        <ImageButton
+            android:id="@+id/button_set_reminder"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/main_button_reminders"
+            android:clickable="true"
+            android:onClick="set_reminder_click"
+            android:scaleType="fitCenter" />
+
+
+        <ImageButton
+            android:id="@+id/button_set_appointment"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/main_button_appointments"
+            android:scaleType="fitCenter"
+            android:clickable="true"
+            android:onClick="goto_appointment"/>
+
+        <ImageButton
+            android:id="@+id/btn_main_go_patient_history"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/main_button_records"
+            android:scaleType="fitCenter"
+            android:clickable="true"
+            android:onClick="goto_patient_history"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Medicine reminders"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:clickable="true"
+            android:onClick="set_reminder_click"/>
+
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Appointments"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:clickable="true"
+            android:onClick="goto_appointment"/>
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Access healthcare records"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:clickable="true"
+            android:onClick="goto_patient_history"/>
+
+    </LinearLayout>
+    <!--row change-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <ImageButton
+            android:id="@+id/btn_main_go_check_symp"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/main_button_symptoms"
+            android:clickable="true"
+            android:onClick="goto_check_symp"
+            android:scaleType="fitCenter" />
+
+        <ImageButton
+            android:id="@+id/button_call_doctor"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/main_button_call"
+            android:scaleType="fitCenter"
+            android:clickable="true"
+            android:onClick="Btn_call_doctor_click"/>
+
+        <!--<ImageButton-->
+            <!--android:id="@+id/btn_main_go_setting"-->
+            <!--android:background="@null"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:src="@drawable/main_button_setting"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:clickable="true"-->
+            <!--android:onClick="goto_setting"/>-->
+
+        <ImageButton
+            android:id="@+id/btn_main_go_vitals"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/main_button_vital"
+            android:scaleType="fitCenter"
+            android:clickable="true"
+            android:onClick="goto_vitals"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Check symptoms"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:clickable="true"
+            android:onClick="goto_check_symp"/>
+
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Video call"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:clickable="true"
+            android:onClick="goto_setting"/>
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Measure Vitals "
+            android:textSize="20dp"
+            android:gravity="center"
+            android:clickable="true"
+            android:onClick="goto_vitals"/>
+
+    </LinearLayout>
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_main_debug"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="select"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--<Button-->
+        <!--android:id="@+id/button_set_reminder"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/set_reminder"-->
+        <!--android:onClick="set_reminder_click"-->
+        <!--/>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/button_set_appointment"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Appointment"-->
+        <!--android:onClick="goto_appointment"/>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/button_sign_in"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="sign_in"-->
+        <!--android:onClick="sign_in_click"-->
+        <!--/>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/btn_main_go_setting"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Setting"-->
+        <!--android:onClick="goto_setting"/>-->
+    <!---->
+    <!--<Button-->
+        <!--android:id="@+id/btn_main_go_vitals"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Vitals"-->
+        <!--android:onClick="goto_vitals"/>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/button_call_doctor"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="no doctor info"-->
+        <!--android:onClick="Btn_call_doctor_click"-->
+        <!--/>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/btn_main_go_check_symp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="check symptom"-->
+        <!--android:onClick="goto_check_symp"/>-->
+
+    <!--<Button-->
+        <!--android:id="@+id/btn_main_go_patient_history"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="patient history"-->
+        <!--android:onClick="goto_patient_history"/>-->
+</LinearLayout>
